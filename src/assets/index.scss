@@ -1,0 +1,15 @@
+@font-face {
+  font-family: nanum_hyuk;
+  src: url("/font/nanum_hyuk.ttf");
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+
+  .title {
+    font-family: nanum_hyuk;
+  }
+}
