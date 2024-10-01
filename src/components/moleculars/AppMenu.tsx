@@ -2,7 +2,7 @@ import AppMenuItem from "@atoms/AppMenuItem";
 import { Stack } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { gameState } from "@src/recoil/GameAtom";
+import { gameState } from "@src/recoil/gameAtom";
 
 function AppMenu() {
   const gameInfo = useRecoilValue(gameState);
@@ -13,7 +13,11 @@ function AppMenu() {
         <AppMenuItem
           icon={<HomeIcon />}
           feature={() => {
-            setGameState((gameState) => ({ ...gameState, start: false }));
+            setGameState((gameState) => ({
+              ...gameState,
+              start: false,
+              casting: false,
+            }));
           }}
         />
       </Stack>

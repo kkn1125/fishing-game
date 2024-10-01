@@ -12,7 +12,7 @@ function MapBackground({ currentMap }: { currentMap: MapList | null }) {
         bottom={0}
         right={0}
         sx={{
-          backgroundImage: `url(/images/${currentMap}.jpg)`,
+          backgroundImage: `url(/images/${currentMap})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",

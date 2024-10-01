@@ -6,12 +6,14 @@ import FadeTransition, {
 } from "@moleculars/FadeTransition";
 import MainMenu from "@moleculars/MainMenu";
 import { Stack } from "@mui/material";
-import { gameState } from "@src/recoil/GameAtom";
+import { gameState } from "@src/recoil/gameAtom";
+import { Logger } from "@util/Logger";
 import { useEffect, useRef } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const castingZone = 1.5;
 const halfLine = 50;
+const logger = new Logger();
 
 function Home() {
   const gameInfo = useRecoilValue(gameState);
@@ -19,6 +21,7 @@ function Home() {
   const fadeRef = useRef<FadeTransitionHandles>(null);
 
   useEffect(() => {
+    logger.log("load");
     if (fadeRef.current) {
       setGameState((gameState) => ({ ...gameState, fadeRef: fadeRef.current }));
     }
@@ -42,7 +45,7 @@ function Home() {
 
       {!gameInfo.start && <MainMenu />}
 
-      {gameInfo.start && (
+      {gameInfo.start && !gameInfo.waiting && (
         <Stack
           gap={2}
           sx={{

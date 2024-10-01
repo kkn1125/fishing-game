@@ -8,6 +8,7 @@ interface GameState {
   start: boolean;
   scene: MapList | null;
   casting: boolean;
+  waiting: boolean;
   castingScore: number | null;
   fadeRef: FadeTransitionHandles | null;
 }
@@ -19,6 +20,7 @@ export const gameState = atom<GameState>({
     start: false,
     scene: MapList.Main,
     casting: false,
+    waiting: false,
     castingScore: null,
     fadeRef: null,
   }, // default value (aka initial value)

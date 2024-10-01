@@ -1,6 +1,8 @@
 // CastingGauge.tsx
-import React, { useRef, useEffect, useState } from "react";
+import { gameState } from "@src/recoil/gameAtom";
 import { gsap } from "gsap";
+import React, { useEffect, useRef, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 interface GaugeProps {
   targetZoneStart: number; // 타겟 구간 시작 위치 (0 ~ 100)
@@ -13,6 +15,7 @@ const CastingGauge: React.FC<GaugeProps> = ({
   targetZoneEnd,
   getCastingScore,
 }) => {
+  const setGameState = useSetRecoilState(gameState);
   const gaugeRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
@@ -66,6 +69,13 @@ const CastingGauge: React.FC<GaugeProps> = ({
         }
       }
     };
+    const handleClick = () => {
+      if (animationRef.current) {
+        animationRef.current.pause();
+        calculateAccuracy();
+        setGameState((gameState) => ({ ...gameState, waiting: true }));
+      }
+    };
     const calculateAccuracy = () => {
       // 타겟 구간과의 근접도 계산
       let accuracy = 0;
@@ -83,11 +93,13 @@ const CastingGauge: React.FC<GaugeProps> = ({
       // alert(`정확도: ${accuracy.toFixed(2)}%`);
       getCastingScore(+accuracy.toFixed(2));
     };
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("click", handleClick);
+    // window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("click", handleClick);
+      // window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [getCastingScore, progress, targetZoneEnd, targetZoneStart]);
+  }, [getCastingScore, progress, setGameState, targetZoneEnd, targetZoneStart]);
 
   return (
     <div
